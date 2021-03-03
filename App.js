@@ -69,7 +69,7 @@ export default function App() {
     )
   
     const Clear = () => {
-      setShopping([]);
+      setTraining([]);
   
     }
 
