@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Header, Input, Icon, ListItem, Button } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
@@ -9,6 +9,7 @@ const db = SQLite.openDatabase('shoppingdb.db');
 export default function App() {
     const [training, setTraining] = useState('');
     const [amount, setAmount] = useState('');
+    const {tulos, setTulos} = useState('');
     const [traininglist, setTraininglist] = useState([]);
 
     useEffect(() => {
@@ -56,12 +57,13 @@ export default function App() {
 
     const renderItem = ({ item }) => (
       <ListItem bottomDivider>
+        
   <ListItem.Content style={styles.listItem}>
     <View>
        <ListItem.Title style={{fontSize: 20}}>{item.training}</ListItem.Title>
        <ListItem.Subtitle style={{fontSize: 15}}>{item.amount}</ListItem.Subtitle>
     </View>
-    <View style={{alignSelf:'center'}}>
+    <View style={{paddingTop: 10}}>
       <Icon type='material' name='delete' color='red' onPress={() => deleteItem(item.id)}/>
     </View>
   </ListItem.Content>
@@ -76,17 +78,22 @@ export default function App() {
    
   return (
     <View style={styles.container}>
-      <TextInput placeholder='Treeni'
-        style={styles.TextInputStyle}
+      
+      <Input placeholder='Treeni'
+        label='Treeni'
         keyboardType={'default'}
-
+        leftIcon={
+          <Icon type='ionicon' name='barbell-outline' color='black'/>
+        }
         onChangeText={(training) => setTraining(training)}
         value={training}
 
       />
-      <TextInput placeholder='Toistot/määrä'
-        style={styles.TextInputStyle}
-
+      <Input placeholder='Toistot/määrä'
+        label='Määrät'
+        leftIcon={
+          <Icon type='ionicon' name='repeat-outline' color='black'/>
+        }
         keyboardType={'default'}
 
         onChangeText={(amount) => setAmount(amount)}
@@ -94,12 +101,23 @@ export default function App() {
 
       />
       
-      <Button title="LISÄÄ" onPress={saveItem} />
+      <View style={styles.buttonContainer}>
+        <View style={styles.addButton}>
+      <Button raised title="LISÄÄ TREENIIN" 
+      type="outline"
+      onPress={saveItem} />
+      </View>
+      <Button raised title="TYHJENNÄ KAIKKI"
+      type="outline"
+      onPress={Clear} />
+      </View>
+      <View style={{width: "100%"}}>
       <FlatList
         data={traininglist}
         keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
       />
+      </View>
   </View>
   );
     
@@ -113,20 +131,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 170
   },
-  TextInputStyle: {
-    textAlign: 'center',
-    width: 200,
-    borderColor: 'gray',
-    borderWidth: 1
-  },
+ 
   buttonContainer: {
     flexDirection: 'row',
-    paddingTop: 40
+    paddingTop: 17
+    
 
   },
-  button: {
-    width: '30%',
-    height: 40,
+  addButton: {
+    width: '45%',
+    height: 20,
+    paddingRight: 20
 
   },
+  listItem: {
+    alignItems: 'center'
+  },
+  
 });
