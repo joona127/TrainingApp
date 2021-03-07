@@ -41,19 +41,6 @@ export default function App() {
         }, null, updateList
       )    
     }
-  
-    const listSeparator = () => {
-      return (
-        <View
-          style={{
-            height: 5,
-            width: "80%",
-            backgroundColor: "#fff",
-            marginLeft: "10%"
-          }}
-        />
-      );
-    };
 
     const renderItem = ({ item }) => (
       <ListItem bottomDivider>
@@ -71,14 +58,19 @@ export default function App() {
     )
   
     const Clear = () => {
-      setTraining([]);
+      setTraininglist([]);
   
     }
 
    
   return (
     <View style={styles.container}>
-      
+      <View style={styles.header}>
+      <Header
+      leftComponent={{ icon: 'menu', color: '#fff' }}
+      centerComponent={{ text: 'Yläkroppa', style: { color: '#fff'} }}
+      />
+      </View>
       <Input placeholder='Treeni'
         label='Treeni'
         keyboardType={'default'}
@@ -128,8 +120,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 170
+   // justifyContent: 'center',
+    
+    
   },
  
   buttonContainer: {
@@ -147,5 +140,13 @@ const styles = StyleSheet.create({
   listItem: {
     alignItems: 'center'
   },
+
+  header: {
+    alignSelf: 'flex-start',
+    paddingTop: 20,
+    paddingBottom: 50
+    
+  
+  }
   
 });
